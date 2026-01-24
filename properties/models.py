@@ -1,0 +1,35 @@
+from django.db import models
+
+# Create your models here.
+class Property(models.Model):
+    agent = models.ForeignKey()
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.PositiveIntegerField()
+    bedrooms = models.PositiveIntegerField()
+    bathrooms = models.PositiveIntegerField()
+    area_sq_m = models.PositiveIntegerField()
+    
+    class PropertyType(models.TextChoices):
+        HOUSE = "house", "House"
+        APARTMENT = "apartment", "Apartment"
+        LAND = "land", "Land"
+
+    class Status(models.TextChoices):
+        FOR_SALE = "for_sale", "For Sale"
+        FOR_RENT = "for_rent", "For Rent"
+
+    property_type = models.CharField(
+        max_length=20,
+        choices=PropertyType.choices
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices
+    )
+
+    adress = models.TextField()
+    latitude = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
