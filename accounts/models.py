@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class AgentProfile(models.Model):
     user = models.OneToOneField(User, related_name="agents", on_delete=models.CASCADE)
-    phone = models.PositiveIntegerFieldIntegerField(unique=True)
+    phone = models.PositiveIntegerField(unique=True)
     agency_name = models.CharField(max_length=255, unique=True)
     bio = models.TextField()
     photo = models.ImageField(upload_to="media/properties")
