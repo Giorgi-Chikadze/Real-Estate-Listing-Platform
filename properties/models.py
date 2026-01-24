@@ -31,8 +31,17 @@ class Property(models.Model):
         choices=Status.choices
     )
 
-    adress = models.TextField()
-    latitude = models.TextField()
+    address = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+
+class PropertyImage(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='media/')
+
+class Amenity(models.Model):
+    name = models.CharField()
+    properties = models.ManyToManyField(Property, related_name='amenities')
+
+
