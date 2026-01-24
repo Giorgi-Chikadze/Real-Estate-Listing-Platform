@@ -1,8 +1,10 @@
 from django.db import models
+from accounts.models import AgentProfile
+from locations.models import Area
 
 # Create your models here.
 class Property(models.Model):
-    agent = models.ForeignKey()
+    agent = models.ForeignKey(AgentProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     price = models.PositiveIntegerField()
@@ -33,3 +35,4 @@ class Property(models.Model):
     latitude = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
