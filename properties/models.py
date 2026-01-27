@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import AgentProfile
-from locations.models import Area
+from locations.models import Area,City
 
 # Create your models here.
 class Property(models.Model):
@@ -33,15 +33,17 @@ class Property(models.Model):
 
     address = models.TextField()
     created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+
 
 class PropertyImage(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='media/')
 
 class Amenity(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     properties = models.ManyToManyField(Property, related_name='amenities')
 
 
