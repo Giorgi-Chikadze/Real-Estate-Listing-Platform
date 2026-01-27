@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import AgentProfile
-from locations.models import Area
+from locations.models import Area, City
 
 # Create your models here.
 class Property(models.Model):
@@ -36,3 +36,4 @@ class Property(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
