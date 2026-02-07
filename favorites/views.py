@@ -12,6 +12,10 @@ class FavoriteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Des
 
 
     def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return Favorite.objects.none()
+        
         queryset = self.queryset.filter(user=self.request.user)
         return queryset
 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,14 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'accounts',
+    'accounts',
     'booking',
     'properties',
     'locations',
     'favorites',
 
     'django_filters',
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg',
+    'rest_framework_simplejwt',
 ]
 
 
@@ -129,3 +132,37 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHETICATION_CLASSES': (
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+
+
+AUTH_USER_MODEL = 'accounts.User'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+
+SWAGGER_SETTINGS = {
+    'USE_SESSSION_AUTH':False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer':{
+            'type':'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': "შეიყვანეთ JWT ტოკენი: Bearer <ტოკენი>",
+        }
+    },
+}
+
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
