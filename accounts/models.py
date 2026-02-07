@@ -1,9 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
+from django.contrib.auth.models import AbstractUser
+
+
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+
 
 class AgentProfile(models.Model):
-    user = models.OneToOneField(User, related_name="agents", on_delete=models.CASCADE)
+    user = models.OneToOneField('accounts.User', related_name="agents", on_delete=models.CASCADE)
     phone = models.PositiveIntegerField(unique=True)
     agency_name = models.CharField(max_length=255, unique=True)
     bio = models.TextField()
