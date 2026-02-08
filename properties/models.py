@@ -7,10 +7,11 @@ class Property(models.Model):
     agent = models.ForeignKey(AgentProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.PositiveIntegerField()
-    bedrooms = models.PositiveIntegerField()
-    bathrooms = models.PositiveIntegerField()
-    area_sq_m = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(default=0)
+    bedrooms = models.PositiveIntegerField(default=0)
+    bathrooms = models.PositiveIntegerField(default=0)
+    area_sq_m = models.PositiveIntegerField(default=0)
+    view_count = models.PositiveIntegerField(default=0)
     
     class PropertyType(models.TextChoices):
         HOUSE = "house", "House"
