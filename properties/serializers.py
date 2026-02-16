@@ -18,7 +18,7 @@ class PropertyListSerializer(serializers.ModelSerializer):
         if first_image:
             request = self.context.get('request')
             if request:
-                 return request.build_absolute_uri(first_image.image.url)
+                return request.build_absolute_uri(first_image.image.url)
             return first_image.image.url
     
         return None
@@ -44,3 +44,28 @@ class PropertyDetailSerializer(serializers.ModelSerializer):
         model = Property
         fields = ['agent','title', 'price', 'description',
                    'property_type','address','area','city','amenities', 'images']
+
+class PropertyCreateSerializer(serializers.ModelSerializer):
+    amenities = serializers.PrimaryKeyRelatedField(many=True, queryset=Amenity.objects.all(), required=False)
+
+    class Meta:
+        model = Property
+        fields = ['title', 'price', 'property_type', 
+                  'status','bedrooms','bathrooms','area_sq_m',
+                  'created_at', 'city_name', 'area_name', 'primary_image']
+        
+    def validate_price(self, value):
+        if value <= 0:
+            return serializers.ValidationError('price should be more than 0')
+        return value
+    
+    def validate_title(self, value):
+        if len(value) < 10:
+            return serializers.ValidationError('The title mus be longer')
+        return value
+    
+    def validate(self,data):
+        if data.get('area') and data.get('city'):
+            if data.get('area.city') != data.get('city'):
+                return serializers.ValidationError('Area must belong to the city')
+            return data
