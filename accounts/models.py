@@ -12,12 +12,12 @@ class User(AbstractUser):
 
 
 class AgentProfile(models.Model):
-    user = models.OneToOneField('accounts.User', related_name="agents", on_delete=models.CASCADE)
-    phone = models.PositiveIntegerField(unique=True)
+    user = models.OneToOneField('accounts.User', related_name="agent_profile", on_delete=models.CASCADE)
+    phone = models.CharField(max_length=32, unique=True)
     agency_name = models.CharField(max_length=255, unique=True)
     bio = models.TextField()
-    photo = models.ImageField(upload_to="media/properties")
-    is_verified = models.BooleanField()
+    photo = models.ImageField(upload_to="agents")
+    is_verified = models.BooleanField(default=False)
 
 
 

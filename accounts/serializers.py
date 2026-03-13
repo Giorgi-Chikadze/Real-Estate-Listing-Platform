@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from .models import AgentProfile
 
 User = get_user_model()
 
@@ -29,3 +30,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+
+class BecomeAgentSerializer(serializers.ModelSerializer):
+    photo = serializers.ImageField(required=False, allow_null=True)
+    
+    class Meta:
+        model = AgentProfile
+        fields = ('phone', 'agency_name', 'bio', 'photo')
