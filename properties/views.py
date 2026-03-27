@@ -7,7 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from properties.serializers import (PropertyDetailSerializer, PropertyListSerializer,
                                     PropertyImageSerializer, AmenitySerializer,PropertyCreateSerializer, PropertyUpdateSerializer)
 
-class PropertyMOdelviewset(viewsets.ModelViewSet):
+class PropertyModelviewset(viewsets.ModelViewSet):
     queryset = Property.objects.all()
     filter_backends = DjangoFilterBackend
     search_fields = ['title', 'address']
