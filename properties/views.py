@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from properties.serializers import (PropertyDetailSerializer, PropertyListSerializer,
-                                    PropertyImageSerializer, AmenitySerializer)
+                                    PropertyImageSerializer, AmenitySerializer,PropertyCreateSerializer, PropertyUpdateSerializer)
 
 class PropertyMOdelviewset(viewsets.ModelViewSet):
     queryset = Property.objects.all()
@@ -18,6 +18,10 @@ class PropertyMOdelviewset(viewsets.ModelViewSet):
             return PropertyListSerializer
         elif self.action == 'retrieve':
             return PropertyDetailSerializer
+        elif self.action == 'create':
+            return PropertyCreateSerializer
+        elif self.action == ['update', 'partial_update']:
+            return PropertyUpdateSerializer
         return PropertyListSerializer
     
     def retrieve(self, request, *args, **kwargs):
